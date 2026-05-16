@@ -1,5 +1,6 @@
 package com.weathermood.weathermood.users;
 
+import com.weathermood.weathermood.global.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
     public UserResponse signup(SignupRequest request) {
@@ -21,7 +23,7 @@ public class UserService {
 
         User user = new User(
                 request.getEmail(),
-                request.getPassword(),
+                request.getPassword(), // TODO: 나중에 BCrypt로 암호화 필요
                 request.getNickname()
         );
 
@@ -40,9 +42,19 @@ public class UserService {
             throw new IllegalArgumentException("이메일 또는 비밀번호가 올바르지 않습니다.");
         }
 
-        String temporaryToken = "temporary-access-token-" + user.getUserId();
+        String accessToken = jwtTokenProvider.createToken(
+                user.getUserId(),
+                user.getEmail()
+        );
 
-        return LoginResponse.of(temporaryToken, user);
+        return LoginResponse.of(accessToken, user);
+    }
+
+    public UserResponse getMyInfo(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+
+        return UserResponse.from(user);
     }
 
     private void validateSignupRequest(SignupRequest request) {
