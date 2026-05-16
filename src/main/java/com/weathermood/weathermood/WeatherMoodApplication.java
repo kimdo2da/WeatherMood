@@ -1,4 +1,4 @@
-package com.wethermood.weathermood;
+package com.weathermood.weathermood;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
