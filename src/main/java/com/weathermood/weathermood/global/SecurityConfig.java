@@ -27,9 +27,18 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/users/signup", "/users/login").permitAll()
+                        .requestMatchers(
+                                "/users/signup",
+                                "/users/login",
+                                "/weather/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
+
+               // .authorizeHttpRequests(auth -> auth
+                 //       .requestMatchers("/users/signup", "/users/login").permitAll()
+                 //       .anyRequest().authenticated()
+                // )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
