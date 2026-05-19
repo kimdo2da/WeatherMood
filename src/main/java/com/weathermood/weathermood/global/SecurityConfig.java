@@ -30,7 +30,8 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/users/signup",
                                 "/users/login",
-                                "/weather/**"
+                                "/weather/**",
+                                "/simulation/questions"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
