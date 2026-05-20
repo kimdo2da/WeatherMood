@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class ContentExternalService {
 
     private final JikanClient jikanClient;
+    private final TmdbClient tmdbClient;
 
     public ContentPageResponse<AnimeContentResponse> getAnimeList(Integer page) {
         int safePage = normalizePage(page);
@@ -33,6 +34,26 @@ public class ContentExternalService {
         JikanAnimeResponse response = jikanClient.searchAnime(keyword, safePage);
 
         return toAnimePageResponse(response, safePage);
+    }
+
+    public ContentPageResponse<DramaContentResponse> getDramaList(Integer page) {
+        int safePage = normalizePage(page);
+
+        TmdbDramaResponse response = tmdbClient.getPopularDramas(safePage);
+
+        return toDramaPageResponse(response, safePage);
+    }
+
+    public ContentPageResponse<DramaContentResponse> searchDramas(String keyword, Integer page) {
+        int safePage = normalizePage(page);
+
+        if (keyword == null || keyword.isBlank()) {
+            throw new IllegalArgumentException("검색어는 필수입니다.");
+        }
+
+        TmdbDramaResponse response = tmdbClient.searchDramas(keyword, safePage);
+
+        return toDramaPageResponse(response, safePage);
     }
 
     private ContentPageResponse<AnimeContentResponse> toAnimePageResponse(
@@ -61,14 +82,14 @@ public class ContentExternalService {
                 item.getMal_id() == null ? null : String.valueOf(item.getMal_id()),
                 item.getTitle(),
                 "ANIME",
-                toGenreText(item.getGenres()),
+                toAnimeGenreText(item.getGenres()),
                 item.getSynopsis(),
-                getPosterUrl(item),
+                getAnimePosterUrl(item),
                 item.getScore()
         );
     }
 
-    private String toGenreText(List<JikanAnimeResponse.Genre> genres) {
+    private String toAnimeGenreText(List<JikanAnimeResponse.Genre> genres) {
         if (genres == null || genres.isEmpty()) {
             return "";
         }
@@ -78,7 +99,7 @@ public class ContentExternalService {
                 .collect(Collectors.joining(", "));
     }
 
-    private String getPosterUrl(JikanAnimeResponse.AnimeItem item) {
+    private String getAnimePosterUrl(JikanAnimeResponse.AnimeItem item) {
         if (item.getImages() == null) {
             return null;
         }
@@ -93,6 +114,83 @@ public class ContentExternalService {
         }
 
         return null;
+    }
+
+    private ContentPageResponse<DramaContentResponse> toDramaPageResponse(
+            TmdbDramaResponse response,
+            Integer page
+    ) {
+        List<DramaContentResponse> items = response == null || response.getResults() == null
+                ? Collections.emptyList()
+                : response.getResults()
+                .stream()
+                .map(this::toDramaContentResponse)
+                .collect(Collectors.toList());
+
+        boolean hasNext = response != null
+                && response.getTotal_pages() != null
+                && page < response.getTotal_pages();
+
+        return new ContentPageResponse<>(
+                items,
+                new ContentPageResponse.PageInfo(page, hasNext)
+        );
+    }
+
+    private DramaContentResponse toDramaContentResponse(TmdbDramaResponse.DramaItem item) {
+        return new DramaContentResponse(
+                item.getId() == null ? null : String.valueOf(item.getId()),
+                item.getName() != null ? item.getName() : item.getOriginal_name(),
+                "DRAMA",
+                toDramaGenreText(item.getGenre_ids()),
+                item.getOverview(),
+                getDramaPosterUrl(item.getPoster_path()),
+                item.getVote_average()
+        );
+    }
+
+    private String toDramaGenreText(List<Integer> genreIds) {
+        if (genreIds == null || genreIds.isEmpty()) {
+            return "";
+        }
+
+        return genreIds.stream()
+                .map(this::convertTmdbGenre)
+                .collect(Collectors.joining(", "));
+    }
+
+    private String convertTmdbGenre(Integer genreId) {
+        if (genreId == null) {
+            return "";
+        }
+
+        return switch (genreId) {
+            case 10759 -> "Action & Adventure";
+            case 16 -> "Animation";
+            case 35 -> "Comedy";
+            case 80 -> "Crime";
+            case 99 -> "Documentary";
+            case 18 -> "Drama";
+            case 10751 -> "Family";
+            case 10762 -> "Kids";
+            case 9648 -> "Mystery";
+            case 10763 -> "News";
+            case 10764 -> "Reality";
+            case 10765 -> "Sci-Fi & Fantasy";
+            case 10766 -> "Soap";
+            case 10767 -> "Talk";
+            case 10768 -> "War & Politics";
+            case 37 -> "Western";
+            default -> "Unknown";
+        };
+    }
+
+    private String getDramaPosterUrl(String posterPath) {
+        if (posterPath == null || posterPath.isBlank()) {
+            return null;
+        }
+
+        return "https://image.tmdb.org/t/p/w500" + posterPath;
     }
 
     private int normalizePage(Integer page) {
