@@ -55,6 +55,30 @@ public class ContentExternalService {
 
         return toDramaPageResponse(response, safePage);
     }
+    public List<PopularContentResponse> getPopularContents() {
+        List<AnimeContentResponse> animeItems = getAnimeList(1).getItems();
+        List<DramaContentResponse> dramaItems = getDramaList(1).getItems();
+
+        List<PopularContentResponse> popularItems = new java.util.ArrayList<>();
+
+        animeItems.stream()
+                .filter(item -> item.getPosterUrl() != null)
+                .limit(3)
+                .map(PopularContentResponse::fromAnime)
+                .forEach(popularItems::add);
+
+        dramaItems.stream()
+                .filter(item -> item.getPosterUrl() != null)
+                .limit(2)
+                .map(PopularContentResponse::fromDrama)
+                .forEach(popularItems::add);
+
+        java.util.Collections.shuffle(popularItems);
+
+        return popularItems.stream()
+                .limit(5)
+                .toList();
+    }
 
     private ContentPageResponse<AnimeContentResponse> toAnimePageResponse(
             JikanAnimeResponse response,

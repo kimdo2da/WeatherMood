@@ -3,6 +3,8 @@ package com.weathermood.weathermood.contents;
 import com.weathermood.weathermood.global.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/contents")
@@ -51,5 +53,15 @@ public class ContentController {
                 contentExternalService.searchDramas(keyword, page);
 
         return ApiResponse.success(response, "드라마 검색에 성공했습니다.");
+    }
+    @GetMapping("/popular")
+    public ApiResponse<java.util.Map<String, java.util.List<PopularContentResponse>>> getPopularContents() {
+        java.util.List<PopularContentResponse> response =
+                contentExternalService.getPopularContents();
+
+        return ApiResponse.success(
+                java.util.Map.of("items", response),
+                "인기 콘텐츠 조회에 성공했습니다."
+        );
     }
 }
