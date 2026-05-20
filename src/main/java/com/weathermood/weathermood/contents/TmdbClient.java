@@ -42,4 +42,4 @@ public class TmdbClient {
 }
 // /tv/popular 은 인기 드라마 목룍 /search/tv 는 드라마 검색용
 //https://api.themoviedb.org/3/search/tv이런식으로 사용 검색문서
-//한국어로 검색하게될시 params keyword page 값 필수 
+//한국어로 검색하게될시 params keyword page 값 필수
