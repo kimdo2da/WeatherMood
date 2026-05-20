@@ -2,9 +2,14 @@ package com.weathermood.weathermood.users;
 
 import com.weathermood.weathermood.global.ApiResponse;
 import com.weathermood.weathermood.global.CustomUserPrincipal;
+import com.weathermood.weathermood.results.MyResultResponse;
+import com.weathermood.weathermood.results.ResultService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final ResultService resultService;
 
     @PostMapping("/signup")
     public ApiResponse<UserResponse> signup(@RequestBody SignupRequest request) {
@@ -34,5 +40,18 @@ public class UserController {
         UserResponse response = userService.getMyInfo(principal.getUserId());
 
         return ApiResponse.success(response, "OK");
+    }
+
+    @GetMapping("/me/results")
+    public ApiResponse<Map<String, List<MyResultResponse>>> getMyResults(
+            @AuthenticationPrincipal CustomUserPrincipal principal
+    ) {
+        List<MyResultResponse> results =
+                resultService.getMyResults(principal.getUserId());
+
+        return ApiResponse.success(
+                Map.of("items", results),
+                "OK"
+        );
     }
 }
