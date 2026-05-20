@@ -31,7 +31,8 @@ public class SecurityConfig {
                                 "/users/signup",
                                 "/users/login",
                                 "/weather/**",
-                                "/simulation/questions"
+                                "/simulation/questions",
+                                "/contents/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
