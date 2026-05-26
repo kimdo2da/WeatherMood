@@ -197,12 +197,22 @@ public class SimulationService {
             String mainEmotion,
             String weatherCode
     ) {
+        // 외부 API 추천만 사용
+        // DB 샘플 fallback 사용 안 함
+        return createExternalRecommendations(routeId, mainEmotion, weatherCode);
+    }
+
+   /* private RecommendationBundleResponse createRecommendations(
+            Long routeId,
+            String mainEmotion,
+            String weatherCode
+    ) {
         try {
             return createExternalRecommendations(routeId, mainEmotion, weatherCode);
         } catch (Exception e) {
             return createDbFallbackRecommendations(routeId, mainEmotion, weatherCode);
         }
-    }
+    } */
 
     private RecommendationBundleResponse createExternalRecommendations(
             Long routeId,
