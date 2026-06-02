@@ -31,3 +31,4 @@ public class LoginResponse {
         private String nickname;
     }
 }
+//로그인 성공 프론트에 반환 .of jwt토큰 엔티티 등 포함.

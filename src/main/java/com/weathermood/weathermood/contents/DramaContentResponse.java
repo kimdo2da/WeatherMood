@@ -15,3 +15,4 @@ public class DramaContentResponse {
     private String posterUrl;
     private Double score;
 }
+//드라마 응답용 dto

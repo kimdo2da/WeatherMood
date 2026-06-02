@@ -24,5 +24,6 @@ public class TmdbDramaResponse {
         private String first_air_date;
     }
 }
+//tmdb 응답 dto 드라마 목록은 results에 들어옴
 //tmdb 는 포스터를 poster_path만 주고 실제 이미지 url은
 //앞에 https://image.tmdb.org/t/p/w500을 써야함

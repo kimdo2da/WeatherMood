@@ -37,3 +37,4 @@ public class User {
         this.createdAt = LocalDateTime.now();
     }
 }
+//db 테이블데이터를 자바 객채로 다루기위함.

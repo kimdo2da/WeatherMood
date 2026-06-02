@@ -8,3 +8,4 @@ public interface WeatherTypeRepository extends JpaRepository<WeatherType, Long> 
 
     Optional<WeatherType> findByWeatherCode(String weatherCode);
 }
+//디비 접근. select 느낌.

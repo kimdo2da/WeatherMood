@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-
+//토큰 생성,검증 정보 꺼내기
 @Component
 public class JwtTokenProvider {
 
@@ -36,6 +36,7 @@ public class JwtTokenProvider {
                 .signWith(secretKey)
                 .compact();
     }
+    //토큰생성
 
     public boolean validateToken(String token) {
         try {
@@ -49,6 +50,7 @@ public class JwtTokenProvider {
             return false;
         }
     }
+    //토큰검증
 
     public Long getUserId(String token) {
         Claims claims = getClaims(token);
@@ -68,3 +70,4 @@ public class JwtTokenProvider {
                 .getPayload();
     }
 }
+//토큰에서 정보얻어오기

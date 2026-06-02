@@ -15,3 +15,4 @@ public class AnimeContentResponse {
     private String posterUrl;
     private Double score;
 }
+//애니 콘텐츠 보여주기 위한 응답 dto

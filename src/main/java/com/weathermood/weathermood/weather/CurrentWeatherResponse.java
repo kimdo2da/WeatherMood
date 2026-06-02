@@ -13,3 +13,4 @@ public class CurrentWeatherResponse {
     private double temperature;
     private String city;
 }
+//current 응답 dto용

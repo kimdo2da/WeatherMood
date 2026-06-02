@@ -39,3 +39,4 @@ public class PopularContentResponse {
         );
     }
 }
+//인기콘텐츠용 응답 dto

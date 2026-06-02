@@ -10,6 +10,7 @@ public class LoginRequest {
     private String email;
     private String password;
 }
+//로그인요청
 //{
 //  "email": "jwt@test.com",
 //  "password": "1234"

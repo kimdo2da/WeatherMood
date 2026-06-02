@@ -25,7 +25,7 @@ public class SimulationController {
                 "시뮬레이션 질문 조회에 성공했습니다."
         );
     }
-
+//질문 조회 질문과 선택지 가져오기
     @PostMapping("/submit")
     public ApiResponse<SimulationSubmitResponse> submit(
             @AuthenticationPrincipal CustomUserPrincipal principal,
@@ -37,3 +37,4 @@ public class SimulationController {
         return ApiResponse.success(response, "시뮬레이션 결과가 생성되었습니다.");
     }
 }
+//시뮬레이션 결과 제출

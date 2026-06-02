@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/users") //간편화 
 @RequiredArgsConstructor
 public class UserController {
 
@@ -31,7 +31,7 @@ public class UserController {
         LoginResponse response = userService.login(request);
 
         return ApiResponse.success(response, "로그인에 성공했습니다.");
-    }
+    } //jwt 토큰 줌
 
     @GetMapping("/me")
     public ApiResponse<UserResponse> getMyInfo(
@@ -40,7 +40,7 @@ public class UserController {
         UserResponse response = userService.getMyInfo(principal.getUserId());
 
         return ApiResponse.success(response, "OK");
-    }
+    } //토큰필요
 
     @GetMapping("/me/results")
     public ApiResponse<Map<String, List<MyResultResponse>>> getMyResults(
@@ -54,4 +54,4 @@ public class UserController {
                 "OK"
         );
     }
-}
+} //토큰필요 얘는 resultservice도 사용함 items 배열로 감싸서 반환함.

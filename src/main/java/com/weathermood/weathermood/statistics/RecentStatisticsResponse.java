@@ -40,3 +40,4 @@ public class RecentStatisticsResponse {
         private Long count;
     }
 }
+//통계 기간 루트별 선택수 비율 인기엔딩 인기 콘텐츠

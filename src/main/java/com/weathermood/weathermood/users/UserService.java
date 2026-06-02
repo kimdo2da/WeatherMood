@@ -35,7 +35,7 @@ public class UserService {
 
         return UserResponse.from(savedUser);
     }
-
+//회원가입
     public LoginResponse login(LoginRequest request) {
         validateLoginRequest(request);
 
@@ -53,13 +53,14 @@ public class UserService {
 
         return LoginResponse.of(accessToken, user);
     }
-
+//로그인 검증후 토큰 발급 matches로 암호화 비밀번호를 원문과 일치비교
     public UserResponse getMyInfo(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
         return UserResponse.from(user);
     }
+    //로그인한 사용자 정보 조회
 
     private void validateSignupRequest(SignupRequest request) {
         if (request.getEmail() == null || request.getEmail().isBlank()) {

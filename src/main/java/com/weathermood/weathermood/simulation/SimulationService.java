@@ -51,6 +51,7 @@ public class SimulationService {
                 .map(SimulationQuestionResponse::from)
                 .toList();
     }
+    //질문 조회
 
     @Transactional
     public SimulationSubmitResponse submit(Long userId, SimulationSubmitRequest request) {
@@ -119,7 +120,7 @@ public class SimulationService {
                 recommendations
         );
     }
-
+//결과 저장해야함. 제출 코드.
     private void validateSubmitRequest(SimulationSubmitRequest request) {
         if (request.getWeatherCode() == null || request.getWeatherCode().isBlank()) {
             throw new IllegalArgumentException("날씨 코드는 필수입니다.");
@@ -129,7 +130,7 @@ public class SimulationService {
             throw new IllegalArgumentException("선택지는 최소 1개 이상 필요합니다.");
         }
     }
-
+//요청값 검증 날씨코드 선택지 검증
     private Map<Long, Integer> calculateRouteScores(List<SimulationChoice> choices) {
         Map<Long, Integer> routeScoreMap = new HashMap<>();
 
@@ -145,7 +146,7 @@ public class SimulationService {
 
         return routeScoreMap;
     }
-
+//선택한 선택지들의 루트별 스코어 합산.
     private Map<String, Integer> calculateEmotionScores(List<SimulationChoice> choices) {
         Map<String, Integer> emotionScoreMap = new HashMap<>();
 
@@ -161,7 +162,7 @@ public class SimulationService {
 
         return emotionScoreMap;
     }
-
+//감정 점수 계산 알고리즘
     private Long findHighestRouteId(Map<Long, Integer> routeScoreMap) {
         return routeScoreMap.entrySet()
                 .stream()
@@ -173,6 +174,7 @@ public class SimulationService {
                 .orElseThrow(() -> new IllegalArgumentException("루트 점수를 계산할 수 없습니다."))
                 .getKey();
     }
+    //최종 루트 결정
 
     private String findHighestEmotion(Map<String, Integer> emotionScoreMap) {
         return emotionScoreMap.entrySet()
@@ -185,12 +187,14 @@ public class SimulationService {
                 .orElseThrow(() -> new IllegalArgumentException("대표 감정을 계산할 수 없습니다."))
                 .getKey();
     }
+    //대표감정 계산
 
     private Ending findEnding(Long routeId, Long weatherId) {
         return endingRepository.findFirstByRouteIdAndWeatherId(routeId, weatherId)
                 .or(() -> endingRepository.findFirstByRouteIdAndWeatherIdIsNull(routeId))
                 .orElseThrow(() -> new IllegalArgumentException("조건에 맞는 엔딩을 찾을 수 없습니다."));
     }
+    //엔딩 조회
 
     private RecommendationBundleResponse createRecommendations(
             Long routeId,
@@ -201,7 +205,7 @@ public class SimulationService {
         // DB 샘플 fallback 사용 안 함
         return createExternalRecommendations(routeId, mainEmotion, weatherCode);
     }
-
+//api기반추천 콘텐츠추천
    /* private RecommendationBundleResponse createRecommendations(
             Long routeId,
             String mainEmotion,
@@ -316,7 +320,7 @@ public class SimulationService {
                 new RecommendationSetResponse(setAnime, setDrama)
         );
     }
-
+//외부 api에서 추천해주는 로직
     private RecommendationBundleResponse createDbFallbackRecommendations(
             Long routeId,
             String mainEmotion,

@@ -76,6 +76,7 @@ public class ResultService {
                 .map(this::toMyResultResponse)
                 .toList();
     }
+    //해당 사용자의 결과 조회
 
     private MyResultResponse toMyResultResponse(SimulationResult result) {
         WeatherType weatherType = weatherTypeRepository.findById(result.getWeatherId())

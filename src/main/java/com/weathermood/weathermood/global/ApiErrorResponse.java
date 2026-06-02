@@ -21,3 +21,4 @@ public class ApiErrorResponse {
         private String message;
     }
 }
+//실패 응답 공통형식

@@ -56,3 +56,4 @@ public class MyStatisticsResponse {
         private LocalDateTime createdAt;
     }
 }
+//내 닉네임 시뮬 가장 많은 날씨 루트 엔딩 감정별횟수 최근5개

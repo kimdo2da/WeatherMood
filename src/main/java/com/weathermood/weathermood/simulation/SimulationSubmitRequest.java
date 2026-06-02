@@ -15,6 +15,7 @@ public class SimulationSubmitRequest {
     private BigDecimal temperature;
     private List<Long> selectedChoiceIds;
 }
+// 제출 요청 dto
 //{
 //  "weatherCode": "CLOUDS",
 //  "weatherText": "broken clouds",

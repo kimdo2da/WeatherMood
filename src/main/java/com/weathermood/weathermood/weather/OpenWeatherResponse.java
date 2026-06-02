@@ -22,3 +22,4 @@ public class OpenWeatherResponse {
         private Double temp;
     }
 }
+//api 응답 json 구조에 맞춘 dto, 날씨 메인 값,온도, 도시명 매핑해서 사용

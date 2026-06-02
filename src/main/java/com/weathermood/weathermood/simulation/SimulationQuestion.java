@@ -38,3 +38,4 @@ public class SimulationQuestion {
                 .toList();
     }
 }
+//db와 질문 1개에 선택지 여러개 프론트는 그래서 동일한 선택지가 순서가있음

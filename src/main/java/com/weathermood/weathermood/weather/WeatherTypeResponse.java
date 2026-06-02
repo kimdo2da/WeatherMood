@@ -21,6 +21,7 @@ public class WeatherTypeResponse {
         );
     }
 }
+//디비 entity를 프론트 응답용으로 변환해주는 dto from()
 //외부 날씨 API → 실시간 날씨 가져오기
 //weather_types DB → 우리 서비스에서 사용할 날씨 코드/이름 기준표
 //외부 API의 "Rain"을 우리 서비스 기준 코드인 "RAIN"으로 바꾸고,

@@ -15,10 +15,10 @@ public class WeatherService {
 
     private final WeatherTypeRepository weatherTypeRepository;
 
-    @Value("${weather.api.key}")
+    @Value("${weather.api.key}") //api키
     private String apiKey;
 
-    @Value("${weather.api.city}")
+    @Value("${weather.api.city}")//도시
     private String city;
 
     public List<WeatherTypeResponse> getWeatherTypes() {
@@ -26,7 +26,7 @@ public class WeatherService {
                 .stream()
                 .map(WeatherTypeResponse::from)
                 .toList();
-    }
+    } //이거로 디비 호출(mysql) stream으로 변환 from으로 dto 변환
 
     public CurrentWeatherResponse getCurrentWeather() {
         OpenWeatherResponse openWeatherResponse = requestCurrentWeather();
@@ -48,7 +48,7 @@ public class WeatherService {
                 temperature,
                 cityName
         );
-    }
+    } //날씨 호출 CurrentWeatherResponse 리턴
 
     private OpenWeatherResponse requestCurrentWeather() {
         RestClient restClient = RestClient.create();
@@ -66,7 +66,7 @@ public class WeatherService {
                 )
                 .retrieve()
                 .body(OpenWeatherResponse.class);
-    }
+    } //외부 api 호출 RestClient
 
     private String getOpenWeatherMain(OpenWeatherResponse response) {
         if (response == null || response.getWeather() == null || response.getWeather().isEmpty()) {
@@ -112,7 +112,7 @@ public class WeatherService {
             case "Snow" -> "SNOW";
             default -> "CLOUDS";
         };
-    }
-}
+    } 
+} //우리식으로 외부 api의 날씨를 바꿔줌
 //OpenWeatherMap 호출 → 실제 날씨 main/temp/name 추출
 //→DB weather_types와 매칭 → 응답 반환

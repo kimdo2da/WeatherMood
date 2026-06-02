@@ -38,6 +38,7 @@ public class SimulationChoice {
     @Column(name = "route_id", nullable = false)
     private Long routeId;
 }
+//특정 루트아이디 점수가 있음 선택한 점수를 합산해서 최종루트 대표감정을 계산
 //여기서 route_id는 일단 Long routeId로 단순하게 받았어.
 //나중에 RouteType 엔티티 만들면 @ManyToOne으로 바꿀 수도 있는데,
 //지금 질문 조회 API에서는 루트 정보가 응답에 필요 없으니까 이게 더 간단해.

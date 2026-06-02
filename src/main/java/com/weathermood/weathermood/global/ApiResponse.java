@@ -19,3 +19,4 @@ public class ApiResponse<T> {
         return new ApiResponse<>(true, data, message);
     }
 }
+//성공 응답 공통형식

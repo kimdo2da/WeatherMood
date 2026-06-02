@@ -72,3 +72,4 @@ public class SimulationResult {
         this.createdAt = LocalDateTime.now();
     }
 }
+// 결과저장

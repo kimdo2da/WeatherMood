@@ -48,4 +48,5 @@ public class Content {
     @Column(name = "route_id", nullable = false)
     private Long routeId;
 }
+//db기반이지만 사용은 안함 혹시 몰라 남겨둠
 // route_id 기준으로 콘텐츠 찾기 일단

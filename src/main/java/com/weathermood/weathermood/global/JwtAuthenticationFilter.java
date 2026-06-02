@@ -27,30 +27,30 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
-        String token = resolveToken(request);
+        String token = resolveToken(request); //토큰 읽기.헤더
 
         if (token != null && jwtTokenProvider.validateToken(token)) {
             Long userId = jwtTokenProvider.getUserId(token);
             String email = jwtTokenProvider.getEmail(token);
 
             CustomUserPrincipal principal = new CustomUserPrincipal(userId, email);
-
+//유효 확인
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
                             principal,
                             null,
                             Collections.emptyList()
                     );
-
+//인증객체
             authentication.setDetails(
                     new WebAuthenticationDetailsSource().buildDetails(request)
             );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-
+//저장 컨트롤러에서 사용
         filterChain.doFilter(request, response);
-    }
+    } //유효시 인증객체를 사용한다. 
 
     private String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
@@ -65,4 +65,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         return bearerToken.substring(7);
     }
-}
+} //요청 폼
+//클라이언트의 요청이 들어올때마다 jwt 토큰을 검사하는 필터
+// 로그인이 필요한 코드에 사용됨.

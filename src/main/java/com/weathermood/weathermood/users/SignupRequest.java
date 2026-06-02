@@ -11,3 +11,4 @@ public class SignupRequest {
     private String password;
     private String nickname;
 }
+//회원가입요청

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/contents")
+@RequestMapping("/contents") //
 @RequiredArgsConstructor
 public class ContentController {
 
@@ -22,7 +22,7 @@ public class ContentController {
 
         return ApiResponse.success(response, "애니 목록 조회에 성공했습니다.");
     }
-
+//애니 목록 조회 
     @GetMapping("/anime/search")
     public ApiResponse<ContentPageResponse<AnimeContentResponse>> searchAnime(
             @RequestParam String keyword,
@@ -33,7 +33,7 @@ public class ContentController {
 
         return ApiResponse.success(response, "애니 검색에 성공했습니다.");
     }
-
+//애니 검색
     @GetMapping("/dramas")
     public ApiResponse<ContentPageResponse<DramaContentResponse>> getDramaList(
             @RequestParam(required = false, defaultValue = "1") Integer page
@@ -43,7 +43,7 @@ public class ContentController {
 
         return ApiResponse.success(response, "드라마 목록 조회에 성공했습니다.");
     }
-
+//드라마 목록 조회 
     @GetMapping("/dramas/search")
     public ApiResponse<ContentPageResponse<DramaContentResponse>> searchDramas(
             @RequestParam String keyword,
@@ -54,6 +54,7 @@ public class ContentController {
 
         return ApiResponse.success(response, "드라마 검색에 성공했습니다.");
     }
+    //드라마 검색
     @GetMapping("/popular")
     public ApiResponse<java.util.Map<String, java.util.List<PopularContentResponse>>> getPopularContents() {
         java.util.List<PopularContentResponse> response =
@@ -65,3 +66,4 @@ public class ContentController {
         );
     }
 }
+//인기 콘텐츠 조회

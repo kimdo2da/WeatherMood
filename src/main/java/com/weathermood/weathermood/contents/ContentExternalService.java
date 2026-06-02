@@ -23,7 +23,7 @@ public class ContentExternalService {
 
         return toAnimePageResponse(response, safePage);
     }
-
+//애니 목록 조회 jikan에서 애니 목록응답받기 
     public ContentPageResponse<AnimeContentResponse> searchAnime(String keyword, Integer page) {
         int safePage = normalizePage(page);
 
@@ -35,7 +35,7 @@ public class ContentExternalService {
 
         return toAnimePageResponse(response, safePage);
     }
-
+//검색
     public ContentPageResponse<DramaContentResponse> getDramaList(Integer page) {
         int safePage = normalizePage(page);
 
@@ -43,7 +43,7 @@ public class ContentExternalService {
 
         return toDramaPageResponse(response, safePage);
     }
-
+//드라마 tmdb 
     public ContentPageResponse<DramaContentResponse> searchDramas(String keyword, Integer page) {
         int safePage = normalizePage(page);
 
@@ -55,6 +55,7 @@ public class ContentExternalService {
 
         return toDramaPageResponse(response, safePage);
     }
+    // 드라마 검색
     public List<PopularContentResponse> getPopularContents() {
         List<AnimeContentResponse> animeItems = getAnimeList(1).getItems();
         List<DramaContentResponse> dramaItems = getDramaList(1).getItems();
@@ -79,7 +80,7 @@ public class ContentExternalService {
                 .limit(5)
                 .toList();
     }
-
+//인기 콘텐츠 조회로직
     private ContentPageResponse<AnimeContentResponse> toAnimePageResponse(
             JikanAnimeResponse response,
             Integer page
@@ -100,6 +101,7 @@ public class ContentExternalService {
                 new ContentPageResponse.PageInfo(page, hasNext)
         );
     }
+    //애니 변환 data> animecontentresponse로 변환
 
     private AnimeContentResponse toAnimeContentResponse(JikanAnimeResponse.AnimeItem item) {
         return new AnimeContentResponse(
@@ -112,6 +114,7 @@ public class ContentExternalService {
                 item.getScore()
         );
     }
+    //jikan api 필드를 우리 프론트 필드로 변환
 
     private String toAnimeGenreText(List<JikanAnimeResponse.Genre> genres) {
         if (genres == null || genres.isEmpty()) {
@@ -122,7 +125,7 @@ public class ContentExternalService {
                 .map(JikanAnimeResponse.Genre::getName)
                 .collect(Collectors.joining(", "));
     }
-
+//장르를 변환
     private String getAnimePosterUrl(JikanAnimeResponse.AnimeItem item) {
         if (item.getImages() == null) {
             return null;
@@ -139,7 +142,7 @@ public class ContentExternalService {
 
         return null;
     }
-
+//포스터 url 추출 이미지 
     private ContentPageResponse<DramaContentResponse> toDramaPageResponse(
             TmdbDramaResponse response,
             Integer page
@@ -160,7 +163,7 @@ public class ContentExternalService {
                 new ContentPageResponse.PageInfo(page, hasNext)
         );
     }
-
+//드라마 results> dramacontentresponse로 변환
     private DramaContentResponse toDramaContentResponse(TmdbDramaResponse.DramaItem item) {
         return new DramaContentResponse(
                 item.getId() == null ? null : String.valueOf(item.getId()),
@@ -172,6 +175,7 @@ public class ContentExternalService {
                 item.getVote_average()
         );
     }
+    //드라마 변환 tmdb 드라마 데이터를 프론트 응답용 dto로 
 
     private String toDramaGenreText(List<Integer> genreIds) {
         if (genreIds == null || genreIds.isEmpty()) {
@@ -182,7 +186,7 @@ public class ContentExternalService {
                 .map(this::convertTmdbGenre)
                 .collect(Collectors.joining(", "));
     }
-
+//장르 변환
     private String convertTmdbGenre(Integer genreId) {
         if (genreId == null) {
             return "";
@@ -216,7 +220,7 @@ public class ContentExternalService {
 
         return "https://image.tmdb.org/t/p/w500" + posterPath;
     }
-
+//tmdb는 포스터를 path만 제공> 주소를붙여서 실제 이미지 url로 사용
     private int normalizePage(Integer page) {
         if (page == null || page < 1) {
             return 1;

@@ -27,6 +27,7 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    //비밀번호 암호화 객체 등록
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -48,11 +49,13 @@ public class SecurityConfig {
                                 "/statistics/recent"
                         ).permitAll()
                         .anyRequest().authenticated()
-                )
+                ) //허용url
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-
+//프론트 백엔드 포트 cors 사용 jwt 기반 인증이기에 서버에 로그인 세션 저장 x
+    //SessionCreationPolicy.STATELESS로 설정
+    //또한 요청이 토큰을 먼저 검사하게 jwtauthenticationfilter를 유저보다 앞서게
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -62,7 +65,7 @@ public class SecurityConfig {
                 "http://localhost:5174",
                 "http://localhost:5175"
 
-        ));
+        )); //허용포트
 
         configuration.setAllowedMethods(List.of(
                 "GET",
@@ -71,20 +74,20 @@ public class SecurityConfig {
                 "DELETE",
                 "OPTIONS"
         ));
-
+//허용 메소드
         configuration.setAllowedHeaders(List.of("*"));
 
         configuration.setExposedHeaders(List.of(
                 "Authorization"
         ));
-
+//허용헤더
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
 
         source.registerCorsConfiguration("/**", configuration);
-
+//전체 경로에 적용
         return source;
     }
 }

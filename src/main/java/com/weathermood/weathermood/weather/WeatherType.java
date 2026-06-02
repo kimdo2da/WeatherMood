@@ -25,3 +25,4 @@ public class WeatherType {
     @Column(length = 255)
     private String description;
 }
+// jpa entity 테이블과 매핑됨.

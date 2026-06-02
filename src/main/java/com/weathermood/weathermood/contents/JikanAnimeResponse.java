@@ -44,5 +44,6 @@ public class JikanAnimeResponse {
         private Boolean has_next_page;
     }
 }
+//jikan api 응답 dto
 // data 배열 안에 애니 목록이 들어와있음 jikan
 //페이지 정보는 pagination.has_next_page 형태

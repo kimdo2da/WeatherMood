@@ -19,3 +19,4 @@ public class ContentPageResponse<T> {
         private Boolean hasNext;
     }
 }
+//페이지 공용 응답 dto

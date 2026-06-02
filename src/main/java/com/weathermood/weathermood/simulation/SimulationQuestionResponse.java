@@ -26,3 +26,4 @@ public class SimulationQuestionResponse {
         );
     }
 }
+//질문 entity > 프론트 응답 dto

@@ -19,3 +19,4 @@ public class SimulationChoiceResponse {
         );
     }
 }
+//선택지 entity> 프론트 응답 dto

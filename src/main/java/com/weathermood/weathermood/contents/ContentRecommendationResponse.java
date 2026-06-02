@@ -67,3 +67,4 @@ public class ContentRecommendationResponse {
         );
     }
 }
+//시뮬레이션 추천 결과 사용에 필요함

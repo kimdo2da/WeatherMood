@@ -10,3 +10,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
 }
+//mysql users테이블 select해주는 이메일 조회 로그인할때 사용

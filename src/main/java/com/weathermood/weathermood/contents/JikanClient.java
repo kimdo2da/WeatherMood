@@ -19,7 +19,7 @@ public class JikanClient {
                 .retrieve()
                 .body(JikanAnimeResponse.class);
     }
-
+//인기 애니 조회 
     public JikanAnimeResponse searchAnime(String keyword, Integer page) {
         return restClient.get()
                 .uri(uriBuilder -> uriBuilder
@@ -33,3 +33,5 @@ public class JikanClient {
                 .body(JikanAnimeResponse.class);
     }
 }
+//애니 검색
+//jikan api 호출 파일

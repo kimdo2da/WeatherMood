@@ -51,7 +51,7 @@ public class StatisticsService {
                 trend
         );
     }
-
+//24시간 통계흐름
     public MyStatisticsResponse getMyStatistics(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
@@ -75,7 +75,7 @@ public class StatisticsService {
                 recentResults
         );
     }
-
+//개인 통계
     private List<RecentStatisticsResponse.RouteStat> createRouteStats(List<SimulationResult> results) {
         if (results.isEmpty()) {
             return Collections.emptyList();
@@ -88,7 +88,7 @@ public class StatisticsService {
                         SimulationResult::getRouteId,
                         Collectors.counting()
                 ));
-
+// 루트 결과 
         return routeCountMap.entrySet()
                 .stream()
                 .map(entry -> {
@@ -105,7 +105,7 @@ public class StatisticsService {
                 })
                 .sorted(Comparator.comparing(RecentStatisticsResponse.RouteStat::getCount).reversed())
                 .toList();
-    }
+    } //퍼센트 계산
 
     private List<RecentStatisticsResponse.PopularEnding> createPopularEndings(List<SimulationResult> results) {
         Map<Long, Long> endingCountMap = results.stream()
@@ -137,6 +137,7 @@ public class StatisticsService {
 
         return response;
     }
+    //인기 엔딩 3
 
     private List<RecentStatisticsResponse.PopularContent> createPopularContents(List<SimulationResult> results) {
         Map<String, Long> titleCountMap = new HashMap<>();
@@ -169,7 +170,7 @@ public class StatisticsService {
 
         return response;
     }
-
+//인기 콘텐츠 3
     private List<String> extractRecommendationTitles(String recommendedContents) {
         if (recommendedContents == null || recommendedContents.isBlank()) {
             return Collections.emptyList();
@@ -226,9 +227,9 @@ public class StatisticsService {
             return titles;
         } catch (Exception e) {
             return Collections.emptyList();
-        }
+        } //안 뜨면 반환 오류 x 빈 리스트
     }
-
+// json 문자열에서 콘텐츠 제목만 뽑기
     private Map<String, String> createTrend(List<RecentStatisticsResponse.RouteStat> routeStats) {
         Map<String, String> trend = new LinkedHashMap<>();
 
@@ -242,7 +243,7 @@ public class StatisticsService {
 
         return trend;
     }
-
+// 루트 트랜드 
     private MyStatisticsResponse.MostSelectedWeather createMostSelectedWeather(List<SimulationResult> results) {
         if (results.isEmpty()) {
             return null;
@@ -267,7 +268,7 @@ public class StatisticsService {
                 maxEntry.getValue()
         );
     }
-
+// 내가 가장 많이 선택한 날씨
     private MyStatisticsResponse.MostReachedRoute createMostReachedRoute(List<SimulationResult> results) {
         if (results.isEmpty()) {
             return null;
@@ -292,7 +293,7 @@ public class StatisticsService {
                 maxEntry.getValue()
         );
     }
-
+// 내가 가장 많이 도달한 루트
     private MyStatisticsResponse.MostReachedEnding createMostReachedEnding(List<SimulationResult> results) {
         if (results.isEmpty()) {
             return null;
@@ -317,7 +318,7 @@ public class StatisticsService {
                 maxEntry.getValue()
         );
     }
-
+//내가 가장 많이 도달한 엔딩
     private List<MyStatisticsResponse.MainEmotionStat> createEmotionStats(List<SimulationResult> results) {
         Map<String, Long> emotionCountMap = results.stream()
                 .collect(Collectors.groupingBy(
@@ -361,3 +362,4 @@ public class StatisticsService {
                 .toList();
     }
 }
+// 내 통계+ 최근결과 5개
