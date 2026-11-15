@@ -9,7 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class UserService {
+public class
+UserService {
 
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;

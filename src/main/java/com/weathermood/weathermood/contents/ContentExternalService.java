@@ -19,9 +19,13 @@ public class ContentExternalService {
     public ContentPageResponse<AnimeContentResponse> getAnimeList(Integer page) {
         int safePage = normalizePage(page);
 
-        JikanAnimeResponse response = jikanClient.getTopAnime(safePage);
+        //JikanAnimeResponse response = jikanClient.getTopAnime(safePage);
 
-        return toAnimePageResponse(response, safePage);
+       // return toAnimePageResponse(response, safePage);
+        return new ContentPageResponse<>(
+                Collections.emptyList(),
+                new ContentPageResponse.PageInfo(safePage, false)
+        );
     }
 //애니 목록 조회 jikan에서 애니 목록응답받기 
     public ContentPageResponse<AnimeContentResponse> searchAnime(String keyword, Integer page) {
@@ -31,9 +35,14 @@ public class ContentExternalService {
             throw new IllegalArgumentException("검색어는 필수입니다.");
         }
 
-        JikanAnimeResponse response = jikanClient.searchAnime(keyword, safePage);
+        // JikanAnimeResponse response = jikanClient.searchAnime(keyword, safePage);
 
-        return toAnimePageResponse(response, safePage);
+       // return toAnimePageResponse(response, safePage);
+
+        return new ContentPageResponse<>(
+                Collections.emptyList(),
+                new ContentPageResponse.PageInfo(safePage, false)
+        );
     }
 //검색
     public ContentPageResponse<DramaContentResponse> getDramaList(Integer page) {
@@ -57,24 +66,24 @@ public class ContentExternalService {
     }
     // 드라마 검색
     public List<PopularContentResponse> getPopularContents() {
-        List<AnimeContentResponse> animeItems = getAnimeList(1).getItems();
+        // List<AnimeContentResponse> animeItems = getAnimeList(1).getItems();
         List<DramaContentResponse> dramaItems = getDramaList(1).getItems();
 
         List<PopularContentResponse> popularItems = new java.util.ArrayList<>();
 
-        animeItems.stream()
+       /* animeItems.stream()
                 .filter(item -> item.getPosterUrl() != null)
                 .limit(3)
                 .map(PopularContentResponse::fromAnime)
                 .forEach(popularItems::add);
-
+*/
         dramaItems.stream()
                 .filter(item -> item.getPosterUrl() != null)
-                .limit(2)
+                .limit(5)
                 .map(PopularContentResponse::fromDrama)
                 .forEach(popularItems::add);
 
-        java.util.Collections.shuffle(popularItems);
+        Collections.shuffle(popularItems);
 
         return popularItems.stream()
                 .limit(5)
